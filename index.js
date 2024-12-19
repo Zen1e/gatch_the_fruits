@@ -9,6 +9,29 @@ start.classList.add("startButton");
 start.innerHTML = "Start";
 start.addEventListener("click", gameStart);
 
+//Score & Live
+let score = 0;
+let lives = 4;
+let highestScore = 0;
+const pointer = document.createElement("div");
+const livesCont = document.createElement("div")
+livesCont.classList.add("liveCont")
+livesCont.id = "liveCont"
+const liveIcon1 = document.createElement("div")
+const liveIcon2 = document.createElement("div")
+const liveIcon3 = document.createElement("div")
+liveIcon1.classList.add("liveIcon")
+liveIcon2.classList.add("liveIcon")
+liveIcon3.classList.add("liveIcon")
+pointer.classList.add("pointer")
+pointer.id  = "pointer"
+document.getElementById("container").appendChild(pointer)
+document.getElementById("container").appendChild(livesCont)
+document.getElementById("liveCont").appendChild(liveIcon1);
+document.getElementById("liveCont").appendChild(liveIcon2);
+document.getElementById("liveCont").appendChild(liveIcon3);
+document.getElementById("pointer").innerHTML = "score:"+score
+
 //Start
 function gameStart() {
   start.style.display = "none";
@@ -39,11 +62,11 @@ function gameStart() {
   cherry.classList.add("hidden");
   const fruit = document.getElementsByClassName("fruit");
 
-  let random = Math.floor(Math.random() * 950);
-  let i = 0;
-  fruit[0].style.left = random + "px";
-
-  setInterval(fruitFall, 2000);
+//   let random = Math.floor(Math.random() * 950);
+//   let oldRan = random, i = 0;
+//   fruit[0].style.left = random + "px";
+let i=0, oldRan = -100;
+  setInterval(fruitFall, 3000);
 
   function fruitFall() {
     fruit[i].classList.remove("animate");
@@ -53,10 +76,12 @@ function gameStart() {
     fruit[i].classList.add("animate");
     fruit[i].classList.remove("hidden");
     fruit[i].style.left = random + "px";
+    setTimeout(score_check(oldRan), 3000)
+    oldRan = random
   }
 
   //Basket
-  let modifier = 100;
+  let modifier = 80;
 
   let position = { left: 450 };
 
@@ -71,11 +96,9 @@ function gameStart() {
 
   function moveBasket(event) {
     const basketWidth = basket.offsetWidth;
-
     switch (event.key) {
       case "ArrowLeft":
         position.left = Math.max(0, position.left - modifier);
-        console.log("left");
         break;
       case "ArrowRight":
         position.left = Math.min(
@@ -84,9 +107,40 @@ function gameStart() {
         );
         break;
     }
-
     basket.style.left = position.left + "px";
+    return position.left;
   }
 
   document.addEventListener("keydown", moveBasket);
+
+let t=0;
+  function score_check(oldRan){
+      let leftEdge = position.left-30;
+      let rightEdge = leftEdge+150;
+      if(leftEdge<=oldRan&&rightEdge>=oldRan){
+            score+=1;
+            console.log(score);
+            
+            document.getElementById("pointer").innerHTML = "score:"+score}
+        else{
+            lives -=1;
+            console.log(lives);
+            if (lives==2){
+                document.getElementById("liveCont").removeChild(liveIcon2);
+                
+            }else if (lives==1){
+                document.getElementById("liveCont").removeChild(liveIcon3);;
+            }else if (lives == 0){
+                document.getElementById("liveCont").removeChild(liveIcon1);
+                // gameOver();
+                alert(score)
+            }
+        }
+        }
+function lives_u(){
+    
 }
+}
+
+
+
