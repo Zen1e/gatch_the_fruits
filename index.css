@@ -13,4 +13,70 @@
     height: 1000px;
     border: 1px solid black;
     overflow: hidden;
+    position: relative;
+    background-image: url('./background.jpg');
+    background-size: cover;
 }
+
+.startButton{
+    position: absolute;
+    font-size: 80px;
+    font-family: fantasy;
+    top: 450px;
+    background-color: yellow;
+    padding: 20px 40px 0px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Fruit */
+.fruit {
+    display: block;
+    position: relative;
+    bottom: 0;
+    width: 60px;
+    height: 75px;
+    background-size: cover;
+  }
+  .hidden {
+    display: none;
+  }
+  .animate {
+    animation: float 2s linear infinite;
+  }
+  .apple {
+    background-image: url("./apple.png");
+  }
+  .strawberry {
+    background-image: url("./strawberry.png");
+  }
+  .banana {
+    background-image: url("./banana.png");
+  }
+  .cherry {
+    background-image: url("./cherry.png");
+  }
+  @keyframes float {
+    0% {
+      top: 0px;
+    }
+    100% {
+      top: 1000px;
+    }
+  }
+
+  /*Basket*/
+  .basket {
+    width: 150px;
+    height: 105px;
+    top: 930px;
+    /* margin-left: ; */
+    position: absolute;
+    overflow: hidden;
+    object-fit: contain;
+    transition: left 0.5s ease;
+  }
+  .basket img {
+    width: 100%;
+    height: 100%;
+  }
