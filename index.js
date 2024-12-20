@@ -188,4 +188,9 @@ function gameStart() {
     clearInterval(fruitInt);
     over.addEventListener("click", gameStart);
   }
+
+
+
+
+  
 }
