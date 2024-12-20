@@ -9,9 +9,15 @@ start.classList.add("startButton");
 start.innerHTML = "Start";
 start.addEventListener("click", gameStart);
 
+const over = document.createElement("div");
+over.classList.add("over");
+document.getElementById("container").appendChild(over);
+over.innerHTML = "You suck";
+over.style.display = "none"
+
 //Score & Live
 let score = 0;
-let lives = 4;
+// let lives = 4;
 let highestScore = 0;
 const pointer = document.createElement("div");
 const livesCont = document.createElement("div");
@@ -35,7 +41,7 @@ document.getElementById("pointer").innerHTML = "score:" + score;
 //Start
 function gameStart() {
   start.style.display = "none";
-
+  over.style.display = "none"
   //Fruits
   const apple = document.createElement("div");
   gameCont.appendChild(apple);
@@ -112,7 +118,7 @@ function gameStart() {
   }
 
   //Basket
-  let modifier = 80;
+  let modifier = 50;
 
   let position = { left: 450 };
 
@@ -173,18 +179,16 @@ function gameStart() {
   }
 
   function gameOver() {
-    const over = document.createElement("div");
-    over.classList.add("over");
-    document.getElementById("container").appendChild(over);
-    over.innerHTML = "You suck";
+    over.style.display = "block"
     let fruit = document.getElementsByClassName("fruit");
-    start.style.display = "none";
+    gameCont.removeChild(basket)
     //   for(let i=0;i<fruit.length;i++){
     //    fruit[i].style.display = "none";
     // }
     for (let i = 0; i < fruit.length; i++) {
       gameCont.removeChild(fruit[i]);
     }
+
     clearInterval(fruitInt);
     over.addEventListener("click", gameStart);
   }
