@@ -117,3 +117,13 @@
 .pooImage {
     background-image: url("./poo.png");
 }
+.over{
+  position: absolute;
+  font-size: 80px;
+  font-family: fantasy;
+  top: 450px;
+  background-color: yellow;
+  padding: 20px 40px 0px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+}

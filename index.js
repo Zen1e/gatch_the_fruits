@@ -68,15 +68,14 @@ function gameStart() {
   poo.classList.add("pooImage");
   poo.classList.add("hidden");
   const bombPoo = document.getElementsByClassName("fruit");
-
   //   let random = Math.floor(Math.random() * 950);
   //   let oldRan = random, i = 0;
   //   fruit[0].style.left = random + "px";
   let i = 0,
     oldRan = -100;
-  setInterval(fruitFall, 3000);
+  const fruitInt = setInterval(fruitFall, 3000);
 
-  setInterval(bombs, 6000);
+  const bombsInt = setInterval(bombs, 6000);
 
   function fruitFall() {
     fruit[i].classList.remove("animate");
@@ -92,21 +91,25 @@ function gameStart() {
 
   function bombs() {
     setTimeout(() => {
-    poo.classList.remove("animate");
-    poo.classList.add("hidden");
-    let randomPoo = Math.floor(Math.random() * 950);
-    poo.classList.add("animate");
-    poo.classList.remove("hidden");
-    poo.style.left = randomPoo + "px";
-    setTimeout(remover => {poo.classList.remove("animate"), poo.classList.add("hidden"); pooCheck(randomPoo)}, 2900)
+      poo.classList.remove("animate");
+      poo.classList.add("hidden");
+      let randomPoo = Math.floor(Math.random() * 950);
+      poo.classList.add("animate");
+      poo.classList.remove("hidden");
+      poo.style.left = randomPoo + "px";
+      setTimeout((remover) => {
+        poo.classList.remove("animate"), poo.classList.add("hidden");
+        pooCheck(randomPoo);
+      }, 2900);
     }, 1500);
-}
-function pooCheck(randomPoo){
+  }
+  function pooCheck(randomPoo) {
     let leftEdge = position.left - 30;
     let rightEdge = leftEdge + 150;
-    if (leftEdge <= randomPoo && rightEdge >= randomPoo){
-        lives = live_u(lives);
-    }}
+    if (leftEdge <= randomPoo && rightEdge >= randomPoo) {
+      lives = live_u(lives);
+    }
+  }
 
   //Basket
   let modifier = 80;
@@ -140,7 +143,8 @@ function pooCheck(randomPoo){
   }
 
   document.addEventListener("keydown", moveBasket);
-
+  let lives = 4;
+  let score = 0;
   let t = 0;
   function score_check(oldRan) {
     let leftEdge = position.left - 30;
@@ -150,22 +154,38 @@ function pooCheck(randomPoo){
 
       document.getElementById("pointer").innerHTML = "score:" + score;
     } else {
-        lives = live_u(lives);
-      }
+      lives = live_u(lives);
     }
-    function live_u(lives){
-      lives-= 1;
-      console.log(lives);
-      if (lives == 2) {
-        document.getElementById("liveCont").removeChild(liveIcon2);
-      } else if (lives == 1) {
-        document.getElementById("liveCont").removeChild(liveIcon3);
-      } else if (lives == 0) {
-        document.getElementById("liveCont").removeChild(liveIcon1);
-        // gameOver();
-        alert(score);
+  }
+  function live_u(lives) {
+    lives -= 1;
+    console.log(lives);
+    if (lives == 2) {
+      document.getElementById("liveCont").removeChild(liveIcon2);
+    } else if (lives == 1) {
+      document.getElementById("liveCont").removeChild(liveIcon3);
+    } else if (lives == 0) {
+      document.getElementById("liveCont").removeChild(liveIcon1);
+      gameOver();
     }
     return lives;
-  //   function lives_u() {}
+    //   function lives_u() {}
   }
+
+  function gameOver() {
+    const over = document.createElement("div");
+    over.classList.add("over");
+    document.getElementById("container").appendChild(over);
+    over.innerHTML = "You suck";
+    let fruit = document.getElementsByClassName("fruit");
+    start.style.display = "none";
+    //   for(let i=0;i<fruit.length;i++){
+    //    fruit[i].style.display = "none";
+    // }
+    for (let i = 0; i < fruit.length; i++) {
+      gameCont.removeChild(fruit[i]);
+    }
+    clearInterval(fruitInt);
+    over.addEventListener("click", gameStart);
   }
+}
